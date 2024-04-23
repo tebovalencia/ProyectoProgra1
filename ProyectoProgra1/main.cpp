@@ -57,6 +57,27 @@ void posicionCursor(int x, int y)
     //WriteConsole(hConsole, "Hello", 5, NULL, NULL);
 }
 
+void figuras(int F)
+{
+    int i,j;
+
+    switch(F)
+    {
+    case 1:
+             for (i=1; i<=10 ; i++)
+            {
+             for (j=1;j<=10;j++)
+             {
+                 cout<<"*";
+             }
+                cout <<endl;
+            }
+            break;
+
+    }
+
+}
+
 void operadores(char tecla)
 {
     switch (tecla)
@@ -66,8 +87,11 @@ void operadores(char tecla)
         case 72: posicionCursor(0,-1);break;
         case 80: posicionCursor(0,1);break;
         case 75: posicionCursor(-1,0);break;
+        case 112: figuras(1);break;
     }
 }
+
+
 
 int main()
 {
@@ -85,7 +109,7 @@ int main()
 
     char tecla;
     gotoxy(50,0);cout<<"Menu"<<endl;
-    gotoxy(30,1);cout<<"Esc: Salir,   F1:Menu"<<endl;
+    gotoxy(30,1);cout<<"Esc: Salir,   F1:Triangulo    F2:Cuadrado   F3:Circulo"<<endl;
 
     while(true) {
         if (_kbhit()) { // Si se presiona una tecla
@@ -99,6 +123,8 @@ int main()
 
     return 0;
 }
+
+
 
 
 
