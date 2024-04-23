@@ -34,11 +34,11 @@ void posicionCursor(int x, int y)
     COORD cursorPos = GetConsoleCursorPosition(hConsole);
     a=cursorPos.X+x;
     b=cursorPos.Y+y;
-    if (a>800){
-        a=a-800;
+    if (a>100){
+        a=a-100;
     }
-    if (b>600){
-        b=b-600;
+    if (b>30){
+        b=b-30;
     }
     COORD pos = {a, b};
 
@@ -73,6 +73,8 @@ int main()
 
 
     char tecla;
+    gotoxy(50,0);cout<<"Menu"<<endl;
+    gotoxy(30,1);cout<<"Esc: Salir,   F1:Menu"<<endl;
 
     while(true) {
         if (_kbhit()) { // Si se presiona una tecla
