@@ -64,15 +64,27 @@ void figuras(int F)
     switch(F)
     {
     case 1:
-             for (i=1; i<=10 ; i++)
+             for (i=1; i<=5 ; i++)
             {
-             for (j=1;j<=10;j++)
+             for (j=1;j<=5;j++)
              {
-                 cout<<"*";
+                 cout<<"+";
              }
-                cout <<endl;
+             posicionCursor(-5,1);
             }
             break;
+
+    case 2:
+            for (i=1; i<=4;i++)
+            {
+                for (j=0; j<i; j++)
+                {
+                    cout<<"+";
+                }
+                posicionCursor(-i,1);
+            }
+            break;
+    default: cout<<"Ninguna figura seleccionada";break;
 
     }
 
@@ -87,7 +99,8 @@ void operadores(char tecla)
         case 72: posicionCursor(0,-1);break;
         case 80: posicionCursor(0,1);break;
         case 75: posicionCursor(-1,0);break;
-        case 112: figuras(1);break;
+        case 113: figuras(1);break;
+        case 119: figuras(2);break;
     }
 }
 
@@ -109,7 +122,7 @@ int main()
 
     char tecla;
     gotoxy(50,0);cout<<"Menu"<<endl;
-    gotoxy(30,1);cout<<"Esc: Salir,   F1:Triangulo    F2:Cuadrado   F3:Circulo"<<endl;
+    gotoxy(30,1);cout<<"Esc: Salir,   q:Triangulo    w:Cuadrado   e:Circulo"<<endl;
 
     while(true) {
         if (_kbhit()) { // Si se presiona una tecla
