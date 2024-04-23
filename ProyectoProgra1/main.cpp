@@ -32,8 +32,19 @@ void posicionCursor(int x, int y)
     int a,b;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD cursorPos = GetConsoleCursorPosition(hConsole);
+
+    if (cursorPos.X==0 && x==-1 ){
+        a=100;
+    }
+    else
     a=cursorPos.X+x;
+
+    if (cursorPos.Y==3 && y==-1){
+        b=30;
+    }
+    else
     b=cursorPos.Y+y;
+
     if (a>100){
         a=a-100;
     }
