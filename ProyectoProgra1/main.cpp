@@ -16,15 +16,45 @@ coordinate.Y = y;
 SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinate);
 }
 
+COORD GetConsoleCursorPosition(HANDLE hConsoleOutput) {
+    CONSOLE_SCREEN_BUFFER_INFO cbsi;
+    if (GetConsoleScreenBufferInfo(hConsoleOutput, &cbsi)) {
+        return cbsi.dwCursorPosition;
+    } else {
+        // La función falló. Llama a GetLastError() para obtener más detalles.
+        COORD invalid = { -1, -1 };
+        return invalid;
+    }
+}
+
+void posicionCursor(int x, int y)
+{
+    int a,b;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD cursorPos = GetConsoleCursorPosition(hConsole);
+    a=cursorPos.X+x;
+    b=cursorPos.Y+y;
+    if (a>800){
+        a=a-800;
+    }
+    if (b>600){
+        b=b-600;
+    }
+    COORD pos = {a, b};
+
+    SetConsoleCursorPosition(hConsole, pos);
+    //WriteConsole(hConsole, "Hello", 5, NULL, NULL);
+}
+
 void operadores(char tecla)
 {
     switch (tecla)
     {
         case 27: break;
-        case 77: cout<<"Es la tecla derecha"<<endl;break;
-        case 72: cout<<"Es la tecla arriba"<<endl;break;
-        case 80: cout<<"Es la tecla abajo"<<endl;break;
-        case 75: cout<<"Es la tecla izquierda"<<endl;break;
+        case 77: posicionCursor(1,0);break;
+        case 72: posicionCursor(0,-1);break;
+        case 80: posicionCursor(0,1);break;
+        case 75: posicionCursor(-1,0);break;
     }
 }
 
@@ -43,7 +73,6 @@ int main()
 
 
     char tecla;
-    cout << "Presiona una tecla..." << endl;
 
     while(true) {
         if (_kbhit()) { // Si se presiona una tecla
