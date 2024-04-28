@@ -59,29 +59,42 @@ void posicionCursor(int x, int y)
 
 void figuras(int F)
 {
-    int i,j;
+    int i,j,o;
 
     switch(F)
     {
     case 1:
-             for (i=1; i<=5 ; i++)
+             for (i=1; i<=4 ; i++)
             {
-             for (j=1;j<=5;j++)
+             for (j=0;j<=4;j++)
              {
-                 cout<<"+";
+                 cout<<".";
              }
-             posicionCursor(-5,1);
+             posicionCursor(-j,1);
             }
             break;
 
     case 2:
-            for (i=1; i<=4;i++)
+            for (i=1; i<=8;)
             {
-                for (j=0; j<i; j++)
+                for (j=1; j<=i; j++)
                 {
-                    cout<<"+";
+                    cout<<".";
                 }
-                posicionCursor(-i,1);
+                posicionCursor(-i-1,1);
+
+                i=i+2;
+            }
+            break;
+
+    case 3:
+            for (i=1;i<=4;i++)
+            {
+                for(j=4;j>=1;)
+                {
+                    cout<<".";
+                    j=j-i;
+                }
             }
             break;
     default: cout<<"Ninguna figura seleccionada";break;
@@ -101,6 +114,7 @@ void operadores(char tecla)
         case 75: posicionCursor(-1,0);break;
         case 113: figuras(1);break;
         case 119: figuras(2);break;
+        case 101: figuras(3);break;
     }
 }
 
