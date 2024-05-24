@@ -8,6 +8,68 @@
 
 using namespace std;
 
+int pantalla[100][3];
+int i=0,j=0;
+int tecla;
+
+void gotoxy(int x, int y);
+COORD GetConsoleCursorPosition(HANDLE hConsoleOutput);
+void posicionCursor(int x, int y);
+void figuras(int F);
+void operadorPantalla (int tecla, int imprimir);
+void operadores(char tecla);
+void imprimirPantalla();
+void menu();
+
+int main()
+{
+        // Variables para almacenar las coordenadas del cursor
+    int cursorx = 0, cursory = 0;
+    int tecla;
+
+    // Estructura para almacenar la posición del cursor
+    POINT cursorPos;
+
+                            // Obtener el handle de la ventana de la consola
+                            HWND window = GetConsoleWindow();
+
+                            // Definir nuevo ancho y alto para la ventana
+                            int nuevoAncho = 800; // Ancho en píxeles
+                            int nuevoAlto = 600;  // Alto en píxeles
+
+                            // Establecer el tamaño de la ventana
+                            SetWindowPos(window, HWND_TOP, 0, 0, nuevoAncho, nuevoAlto, SWP_NOMOVE);
+
+        while(true) {
+            if (_kbhit()) { // Si se presiona una tecla
+                tecla = _getch(); // Captura la tecla presionada
+                if (tecla == 0 || tecla == 224) { // Teclas extendidas
+                        tecla = _getch();
+                        if (tecla == 134){
+                                // Obtener la posición del cursor
+                                HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                                COORD cursorPos = GetConsoleCursorPosition(hConsole);
+                                    //muestra menu
+                                    menu();
+                                    gotoxy(cursorPos.X,cursorPos.Y);
+
+                        }
+                }
+                operadores(tecla);
+                if (tecla == 27) { // Si la tecla es ESC
+                    break; // Salir del bucle
+                }
+            }
+        }
+
+
+
+
+
+    return 0;
+}
+
+
 //Funcion para para mover el cursor a un punto especifico conociendo las coordenadas
 void gotoxy(int x, int y)
 {
@@ -16,7 +78,7 @@ coordinate.X = x;
 coordinate.Y = y;
 SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinate);
 }
-//Funcion necesaria para el movimiento paso a paso del cursor
+//Funcion para obtener la posicion del cursor
 COORD GetConsoleCursorPosition(HANDLE hConsoleOutput) {
     CONSOLE_SCREEN_BUFFER_INFO cbsi;
     if (GetConsoleScreenBufferInfo(hConsoleOutput, &cbsi)) {
@@ -57,6 +119,7 @@ void posicionCursor(int x, int y)
 
 }
 
+//Funcion para imprimir las figuras deseadas
 void figuras(int F)
 {
     int i,j,o;
@@ -103,6 +166,31 @@ void figuras(int F)
 
 }
 
+
+//Con esta funcion guardare la posicion de todas las figuras en pantalla para luego reimprimirlas para limpiar el menu
+void operadorPantalla (int tecla, int imprimir){
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD cursorPos = GetConsoleCursorPosition(hConsole);
+
+    pantalla[i][1]=cursorPos.X;
+    pantalla[i][2]=cursorPos.Y;
+    pantalla[i][3]=tecla;
+    i=i+1;
+    imprimirPantalla();
+
+}
+
+void imprimirPantalla()
+{
+    system("cls");
+    for (j=0;j<=100;j++){
+    gotoxy(pantalla[j][1],pantalla[j][2]);
+    operadores(pantalla[j][3]);
+    }
+}
+
+//Operadores de seleccion de tecla
 void operadores(char tecla)
 {
     switch (tecla)
@@ -112,67 +200,27 @@ void operadores(char tecla)
         case 72: posicionCursor(0,-1);break;
         case 80: posicionCursor(0,1);break;
         case 75: posicionCursor(-1,0);break;
-        case 59: figuras(1);break; //Triangulo 113
-        case 119: figuras(2);break; //Cuadrado
-        case 101: figuras(3);break; //Circulo
+        case 59: figuras(1);break; //Triangulo F1
+        case 60: figuras(2);break; //Cuadrado F2
+        case 61: figuras(3);break; //Circulo
     }
 }
 
+//Funcion de menu
 void menu(){
     gotoxy(50,0);cout<<"Menu"<<endl;
-    gotoxy(30,1);cout<<"Esc: Salir,   q:Triangulo    w:Cuadrado   e:Circulo"<<endl;
+    gotoxy(30,1);cout<<"Esc: Salir,   F1:Cuadrado  F2:Triangulo F3:Circulo";
+    tecla = _getch();
+    operadorPantalla(tecla,0);
+
 }
 
 
-int main()
-{
-        // Variables para almacenar las coordenadas del cursor
-    int cursorx = 0, cursory = 0;
-
-    // Estructura para almacenar la posición del cursor
-    POINT cursorPos;
-
-                            // Obtener el handle de la ventana de la consola
-                            HWND window = GetConsoleWindow();
-
-                            // Definir nuevo ancho y alto para la ventana
-                            int nuevoAncho = 800; // Ancho en píxeles
-                            int nuevoAlto = 600;  // Alto en píxeles
-
-                            // Establecer el tamaño de la ventana
-                            SetWindowPos(window, HWND_TOP, 0, 0, nuevoAncho, nuevoAlto, SWP_NOMOVE);
 
 
-    int tecla;
 
-    while(true) {
-        if (_kbhit()) { // Si se presiona una tecla
-            tecla = _getch(); // Captura la tecla presionada
-            if (tecla == 0 || tecla == 224) { // Teclas extendidas
-                    tecla = _getch();
-                    if (tecla == 134){
-                            // Obtener la posición del cursor
-                            if (GetCursorPos(&cursorPos)) {
-                                // Guardar las coordenadas del cursor en las variables
-                                cursorx = cursorPos.x;
-                                cursory = cursorPos.y;
-                                //muestra menu
-                                menu();
-                                gotoxy(cursorx,cursory);
-                            } else {
-                                std::cerr << "Error al obtener la posición del cursor." << std::endl;
-                            }
-                    }
-            }
-            operadores(tecla);
-            if (tecla == 27) { // Si la tecla es ESC
-                break; // Salir del bucle
-            }
-        }
-    }
 
-    return 0;
-}
+
 
 
 
