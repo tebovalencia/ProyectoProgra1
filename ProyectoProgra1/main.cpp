@@ -8,6 +8,7 @@
 
 using namespace std;
 
+//Funcion para para mover el cursor a un punto especifico conociendo las coordenadas
 void gotoxy(int x, int y)
 {
 COORD coordinate;
@@ -15,7 +16,7 @@ coordinate.X = x;
 coordinate.Y = y;
 SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinate);
 }
-
+//Funcion necesaria para el movimiento paso a paso del cursor
 COORD GetConsoleCursorPosition(HANDLE hConsoleOutput) {
     CONSOLE_SCREEN_BUFFER_INFO cbsi;
     if (GetConsoleScreenBufferInfo(hConsoleOutput, &cbsi)) {
@@ -26,7 +27,7 @@ COORD GetConsoleCursorPosition(HANDLE hConsoleOutput) {
         return invalid;
     }
 }
-
+//Funcion para mover el cursor a partir de la posicion actual una cantidad deseada y pantalla circular
 void posicionCursor(int x, int y)
 {
     int a,b;
@@ -34,27 +35,26 @@ void posicionCursor(int x, int y)
     COORD cursorPos = GetConsoleCursorPosition(hConsole);
 
     if (cursorPos.X==0 && x==-1 ){
-        a=100;
+        a=110;
     }
     else
     a=cursorPos.X+x;
 
-    if (cursorPos.Y==3 && y==-1){
+    if (cursorPos.Y==0 && y==-1){
         b=30;
     }
     else
     b=cursorPos.Y+y;
 
-    if (a>100){
-        a=a-100;
+    if (a>110){
+        a=a-110;
     }
     if (b>30){
         b=b-30;
     }
-    COORD pos = {a, b};
 
-    SetConsoleCursorPosition(hConsole, pos);
-    //WriteConsole(hConsole, "Hello", 5, NULL, NULL);
+    gotoxy(a,b);
+
 }
 
 void figuras(int F)
@@ -112,16 +112,25 @@ void operadores(char tecla)
         case 72: posicionCursor(0,-1);break;
         case 80: posicionCursor(0,1);break;
         case 75: posicionCursor(-1,0);break;
-        case 113: figuras(1);break;
-        case 119: figuras(2);break;
-        case 101: figuras(3);break;
+        case 59: figuras(1);break; //Triangulo 113
+        case 119: figuras(2);break; //Cuadrado
+        case 101: figuras(3);break; //Circulo
     }
 }
 
+void menu(){
+    gotoxy(50,0);cout<<"Menu"<<endl;
+    gotoxy(30,1);cout<<"Esc: Salir,   q:Triangulo    w:Cuadrado   e:Circulo"<<endl;
+}
 
 
 int main()
 {
+        // Variables para almacenar las coordenadas del cursor
+    int cursorx = 0, cursory = 0;
+
+    // Estructura para almacenar la posición del cursor
+    POINT cursorPos;
 
                             // Obtener el handle de la ventana de la consola
                             HWND window = GetConsoleWindow();
@@ -134,13 +143,27 @@ int main()
                             SetWindowPos(window, HWND_TOP, 0, 0, nuevoAncho, nuevoAlto, SWP_NOMOVE);
 
 
-    char tecla;
-    gotoxy(50,0);cout<<"Menu"<<endl;
-    gotoxy(30,1);cout<<"Esc: Salir,   q:Triangulo    w:Cuadrado   e:Circulo"<<endl;
+    int tecla;
 
     while(true) {
         if (_kbhit()) { // Si se presiona una tecla
             tecla = _getch(); // Captura la tecla presionada
+            if (tecla == 0 || tecla == 224) { // Teclas extendidas
+                    tecla = _getch();
+                    if (tecla == 134){
+                            // Obtener la posición del cursor
+                            if (GetCursorPos(&cursorPos)) {
+                                // Guardar las coordenadas del cursor en las variables
+                                cursorx = cursorPos.x;
+                                cursory = cursorPos.y;
+                                //muestra menu
+                                menu();
+                                gotoxy(cursorx,cursory);
+                            } else {
+                                std::cerr << "Error al obtener la posición del cursor." << std::endl;
+                            }
+                    }
+            }
             operadores(tecla);
             if (tecla == 27) { // Si la tecla es ESC
                 break; // Salir del bucle
