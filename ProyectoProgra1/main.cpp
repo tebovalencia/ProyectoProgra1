@@ -26,6 +26,7 @@ void menu(int X, int Y);
 void colorTexto(int color);
 char simbolo(int x);
 void exportar();
+void importar();
 
 int main()
 {
@@ -243,27 +244,7 @@ void menu(int X, int Y){
     tecla = _getch();
 
     if (tecla==1){
-        ifstream inFile("pantalla.txt");
-
-    if (!inFile) {
-        std::cerr << "Error al abrir el archivo para lectura." << std::endl;
-        return ;
-    }
-
-    // Leer los elementos del archivo y almacenarlos en el array
-    for (int l = 0; l <= 100 ; l++) {
-        for (int m = 1; m<= 6; m++) {
-            inFile >> pantalla[l][m];
-            if (inFile.fail()) {
-                std::cerr << "Error al leer el archivo." << std::endl;
-                return ;
-            }
-        }
-    }
-
-    // Cerrar el archivo
-    inFile.close();
-    imprimirPantalla();
+        importar();
 
     }
 
@@ -371,6 +352,34 @@ void exportar(){
 
     // Cerrar el archivo
     outFile.close();
+
+
+}
+
+void importar(){
+
+    ifstream inFile("pantalla.txt");
+
+    if (!inFile) {
+        std::cerr << "Error al abrir el archivo para lectura." << std::endl;
+        return ;
+    }
+
+    // Leer los elementos del archivo y almacenarlos en el array
+    for (int l = 0; l <= 100 ; l++) {
+        for (int m = 1; m<= 6; m++) {
+            inFile >> pantalla[l][m];
+            if (inFile.fail()) {
+                std::cerr << "Error al leer el archivo." << std::endl;
+                return ;
+            }
+        }
+    }
+
+    // Cerrar el archivo
+    inFile.close();
+    imprimirPantalla();
+
 
 
 }
