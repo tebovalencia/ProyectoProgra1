@@ -8,21 +8,22 @@
 
 using namespace std;
 
-int pantalla[100][3];
-int i=0,j=0;
+int pantalla[100][5]; //1-Posicion X, 2-Posicion Y, 3-Tecla, 4-Color, 5-Simbolo
+int X=0,Y=0,i=0,j=0, p=0; //P se usa para contador de pantalla
 int tecla;
 
 void gotoxy(int x, int y);
 COORD GetConsoleCursorPosition(HANDLE hConsoleOutput);
 void posicionCursor(int x, int y);
 void figuras(int F);
-void operadorPantalla (int tecla, int imprimir);
+void operadorPantalla (int tecla, int X, int Y);
 void operadores(char tecla);
 void imprimirPantalla();
-void menu();
+void menu(int X, int Y);
 
 int main()
 {
+    fflush;
         // Variables para almacenar las coordenadas del cursor
     int cursorx = 0, cursory = 0;
     int tecla;
@@ -50,8 +51,9 @@ int main()
                                 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
                                 COORD cursorPos = GetConsoleCursorPosition(hConsole);
                                     //muestra menu
-                                    menu();
+                                    menu(cursorPos.X,cursorPos.Y);
                                     gotoxy(cursorPos.X,cursorPos.Y);
+                                    p=p+1;
 
                         }
                 }
@@ -92,27 +94,28 @@ COORD GetConsoleCursorPosition(HANDLE hConsoleOutput) {
 //Funcion para mover el cursor a partir de la posicion actual una cantidad deseada y pantalla circular
 void posicionCursor(int x, int y)
 {
-    int a,b;
+    int a=0,b=0;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD cursorPos = GetConsoleCursorPosition(hConsole);
 
     if (cursorPos.X==0 && x==-1 ){
-        a=110;
+        a=103;
+
     }
     else
     a=cursorPos.X+x;
 
     if (cursorPos.Y==0 && y==-1){
-        b=30;
+        b=34;
     }
     else
     b=cursorPos.Y+y;
 
-    if (a>110){
-        a=a-110;
+    if (a>103){
+        a=a-103;
     }
-    if (b>30){
-        b=b-30;
+    if (b>34){
+        b=b-34;
     }
 
     gotoxy(a,b);
@@ -168,15 +171,11 @@ void figuras(int F)
 
 
 //Con esta funcion guardare la posicion de todas las figuras en pantalla para luego reimprimirlas para limpiar el menu
-void operadorPantalla (int tecla, int imprimir){
+void operadorPantalla (int tecla, int X, int Y){
 
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD cursorPos = GetConsoleCursorPosition(hConsole);
-
-    pantalla[i][1]=cursorPos.X;
-    pantalla[i][2]=cursorPos.Y;
-    pantalla[i][3]=tecla;
-    i=i+1;
+    pantalla[p][1]=X;
+    pantalla[p][2]=Y;
+    pantalla[p][3]=tecla;
     imprimirPantalla();
 
 }
@@ -207,11 +206,13 @@ void operadores(char tecla)
 }
 
 //Funcion de menu
-void menu(){
+void menu(int X, int Y){
     gotoxy(50,0);cout<<"Menu"<<endl;
     gotoxy(30,1);cout<<"Esc: Salir,   F1:Cuadrado  F2:Triangulo F3:Circulo";
     tecla = _getch();
-    operadorPantalla(tecla,0);
+    if (tecla == 0 || tecla == 224) { // Teclas extendidas
+        tecla = _getch();}
+    operadorPantalla(tecla,X,Y);
 
 }
 
