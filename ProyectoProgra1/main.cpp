@@ -42,7 +42,7 @@ int main()
                             HWND window = GetConsoleWindow();
 
                             // Definir nuevo ancho y alto para la ventana
-                            int nuevoAncho = 800; // Ancho en píxeles
+                            int nuevoAncho = 1000; // Ancho en píxeles
                             int nuevoAlto = 600;  // Alto en píxeles
 
                             // Establecer el tamaño de la ventana
@@ -106,7 +106,7 @@ void posicionCursor(int x, int y)
     COORD cursorPos = GetConsoleCursorPosition(hConsole);
 
     if (cursorPos.X==0 && x==-1 ){
-        a=102;
+        a=130;
 
     }
     else
@@ -118,8 +118,8 @@ void posicionCursor(int x, int y)
     else
     b=cursorPos.Y+y;
 
-    if (a>102){
-        a=a-103;
+    if (a>130){
+        a=a-131;
     }
     if (b>34){
         b=b-35;
@@ -238,7 +238,7 @@ void menu(int X, int Y){
     reiniciar:
     system("cls");
     gotoxy(50,0);cout<<"Menu"<<endl;
-    gotoxy(0,1);cout<<"Esc: Salir - F1:Cuadrado - F2:Triangulo - F3:Linea";
+    gotoxy(0,1);cout<<"Esc: Salir - F1:Cuadrado - F2:Triangulo - F3:Linea - F4: Rectangulo - F5: Circulo - F6: Rombo - F7: Hexagono";
     gotoxy(0,2);cout<<"F8:Cambiar caracter - F9:Borrar pantalla - F10:Cambiar color";
     gotoxy(0,3);cout<<"F12:Grabar pantalla - Ctrl+A: Abrir desde archivo ";
     tecla = _getch();
