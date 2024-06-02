@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1717349348 source:c:\users\evale\downloads\proyectoprogra1\proyectoprogra1\proyectoprogra1\main.cpp
+1717351241 source:c:\users\evale\downloads\proyectoprogra1\proyectoprogra1\proyectoprogra1\main.cpp
 	<iostream>
 	<conio.h>
 	<stdio.h>
@@ -7,6 +7,7 @@
 	<cstdlib>
 	<conio.h>
 	<windows.h>
+	<fstream>
 
 1713893995 source:e:\tebo\downloads\proyectoprogra1\proyectoprogra1\proyectoprogra1\main.cpp
 	<iostream>

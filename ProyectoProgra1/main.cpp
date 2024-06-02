@@ -283,6 +283,11 @@ void menu(int X, int Y){
         goto reiniciar;
         }
 
+        if (tecla==134){
+            exportar();
+            goto reiniciar;
+        }
+
         system("cls");
         cout<<"Ingrese el tamano de la figura: ";cin>>n;n=n-1;}
 
@@ -329,7 +334,17 @@ char simbolo(int x){
 
 void exportar(){
 
+    ofstream outFile("pantalla.txt");
 
+    for (int l = 0; l <= 100; l++) {
+        for(int m=0; m<=6;m++){
+        outFile << pantalla[l][m] << " ";
+        }
+        outFile<<endl;
+    }
+
+    // Cerrar el archivo
+    outFile.close();
 
 
 }
