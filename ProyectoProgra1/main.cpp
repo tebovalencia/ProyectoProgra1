@@ -237,31 +237,57 @@ void menu(int X, int Y){
     reiniciar:
     system("cls");
     gotoxy(50,0);cout<<"Menu"<<endl;
-    gotoxy(0,1);cout<<"Esc: Salir - F1:Cuadrado - F2:Triangulo - F3:Linea - F8:Caracter - F9:Borrar pantalla - F10:Color";
+    gotoxy(0,1);cout<<"Esc: Salir - F1:Cuadrado - F2:Triangulo - F3:Linea";
+    gotoxy(0,2);cout<<"F8:Cambiar caracter - F9:Borrar pantalla - F10:Cambiar color";
+    gotoxy(0,3);cout<<"F12:Grabar pantalla - Ctrl+A: Abrir desde archivo ";
     tecla = _getch();
+
+    if (tecla==1){
+        ifstream inFile("pantalla.txt");
+
+    if (!inFile) {
+        std::cerr << "Error al abrir el archivo para lectura." << std::endl;
+        return ;
+    }
+
+    // Leer los elementos del archivo y almacenarlos en el array
+    for (int l = 0; l <= 100 ; l++) {
+        for (int m = 1; m<= 6; m++) {
+            inFile >> pantalla[l][m];
+            if (inFile.fail()) {
+                std::cerr << "Error al leer el archivo." << std::endl;
+                return ;
+            }
+        }
+    }
+
+    // Cerrar el archivo
+    inFile.close();
+    imprimirPantalla();
+
+    }
 
     if (tecla == 0 || tecla == 224) { // Teclas extendidas
         tecla = _getch();
 
         if (tecla==66){//F8
-            cout<<"Seleccione el caracter que desea usar/n";
-            cout<<"1- . (punto)";
-            cout<<"1- * (asterisco)";
-            cout<<"1- - (guion)";
-            cout<<"1- @ (arroba)";
+            system("cls");
+            cout<<"Seleccione el caracter que desea usar"<<endl;
+            cout<<"1 . (punto)"<<endl;
+            cout<<"2 * (asterisco)"<<endl;
+            cout<<"3 - (guion)"<<endl;
+            cout<<"4 @ (arroba)"<<endl;
             cin>>S;
             goto reiniciar;
 
         }
 
         if (tecla==67){//F9
-        for (i=0;i=100;i++){
-            pantalla[i][1]=0;
-            pantalla[i][2]=0;
-            pantalla[i][3]=0;
-            pantalla[i][4]=0;
-            pantalla[i][5]=0;
-            pantalla[i][6]=0;
+        for (int l=0;l<=100;l++){
+            for (int m=1;m<=6;m++){
+            pantalla[l][m]=0;}
+            p=0;
+
         }
         system("cls");
         return;
@@ -337,7 +363,7 @@ void exportar(){
     ofstream outFile("pantalla.txt");
 
     for (int l = 0; l <= 100; l++) {
-        for(int m=0; m<=6;m++){
+        for(int m=1; m<=6;m++){
         outFile << pantalla[l][m] << " ";
         }
         outFile<<endl;
