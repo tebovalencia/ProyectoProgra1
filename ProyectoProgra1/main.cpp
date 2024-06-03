@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <conio.h>
 #include <windows.h>
+#include <cmath>
 #include <fstream>
 
 using namespace std;
@@ -184,7 +185,42 @@ void figuras(int F, int n, int s)
             }
             break;
 
-    default: cout<<"Ninguna figura seleccionada";break;
+    case 5:
+            {
+                const int radio = n; // Radio del círculo
+                const int diametro = 2 * radio; // Diámetro del círculo
+                const int centerX = radio; // Centro del círculo en X
+                const int centerY = radio; // Centro del círculo en Y
+                posicionCursor (-n,-n);
+                // Iterar sobre cada punto en la cuadrícula
+                for (int y = 0; y <= diametro; ++y) {
+                    for (int x = 0; x <= diametro; ++x) {
+                        // Calcular la distancia al centro
+                        double distance = std::sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
+                        // Si la distancia está dentro de un rango del radio, dibujar un asterisco
+                        if (std::abs(distance - radio) < 0.5) {
+                            posicionCursor(1,0);
+                            cout<<simbolo(s);
+                            posicionCursor(-1,0);
+                        } else {
+                            posicionCursor(1,0);
+                            std::cout << " ";
+                            posicionCursor(-1,0);
+                        }
+                    }
+                            for(int m=0; m<= diametro; m++){
+                            posicionCursor(-1,0);// Nueva línea al final de cada fila
+                            }
+                            posicionCursor(0,1);
+                }
+            }
+            break;
+
+    case 6:
+        break;
+
+    default: cout<<"Ninguna figura seleccionada";
+            break;
 
     }
 
@@ -224,9 +260,13 @@ void operadores(char tecla,int n,int s)
         case 72: posicionCursor(0,-1);break;
         case 80: posicionCursor(0,1);break;
         case 75: posicionCursor(-1,0);break;
-        case 59: figuras(1,n,s);break; //Triangulo F1
-        case 60: figuras(2,n,s);break; //Cuadrado F2
-        case 61: figuras(3,n,s);break; //Circulo
+        case 59: figuras(1,n,s);break; //Cuadrado F1
+        case 60: figuras(2,n,s);break; //Triangulo F2
+        case 61: figuras(3,n,s);break; //Linea F3
+        case 62: figuras(4,n,s);break; //Rectangulo F4
+        case 63: figuras(5,n,s);break; //Circulo F5
+        case 64: figuras(6,n,s);break; //Rombo F6
+        case 65: figuras(7,n,s);break; //Hexagono F7
     }
 }
 
