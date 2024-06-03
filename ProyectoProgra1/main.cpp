@@ -185,7 +185,26 @@ void figuras(int F, int n, int s)
             }
             break;
 
+    case 4:
+            //Cuadrado
+             for (i=1; i<=n ; i++)
+            {
+             for (j=0;j<=n;j++)
+             {
+                 posicionCursor(1,0);
+                 cout<<simbolo(s);
+                 posicionCursor(-1,0);
+
+             }
+             for(o=0;o<=n;o++){
+             posicionCursor(-1,0);
+             }
+             posicionCursor(0,1);
+            }
+            break;
+
     case 5:
+            //Circulo
             {
                 const int radio = n; // Radio del círculo
                 const int diametro = 2 * radio; // Diámetro del círculo
@@ -196,15 +215,15 @@ void figuras(int F, int n, int s)
                 for (int y = 0; y <= diametro; ++y) {
                     for (int x = 0; x <= diametro; ++x) {
                         // Calcular la distancia al centro
-                        double distance = std::sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
+                        double distance = sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
                         // Si la distancia está dentro de un rango del radio, dibujar un asterisco
-                        if (std::abs(distance - radio) < 0.5) {
+                        if (abs(distance - radio) < 0.5) {
                             posicionCursor(1,0);
                             cout<<simbolo(s);
                             posicionCursor(-1,0);
                         } else {
                             posicionCursor(1,0);
-                            std::cout << " ";
+                            cout << " ";
                             posicionCursor(-1,0);
                         }
                     }
@@ -217,6 +236,113 @@ void figuras(int F, int n, int s)
             break;
 
     case 6:
+        {
+            int width = 2 * n - 1; // Ancho total del rombo
+
+            // Parte superior del rombo
+            for (int i = 0; i < n; ++i) {
+                // Espacios antes de los asteriscos
+                for (int j = 0; j < n - i - 1; ++j) {
+                    posicionCursor(1,0);
+                    cout << " ";
+                    posicionCursor(-1,0);
+                }
+                // Asteriscos
+                for (int j = 0; j < 2 * i + 1; ++j) {
+                    posicionCursor(1,0);
+                    cout<<simbolo(s);
+                    posicionCursor(-1,0);
+                }
+
+                for (int l=0; l<=n-1+i; ++l){
+                    posicionCursor(-1,0);
+                }
+
+                posicionCursor(0,1);
+            }
+
+            // Parte inferior del rombo
+            for (int i = n - 2; i >= 0; --i) {
+                // Espacios antes de los asteriscos
+                for (int j = 0; j < n - i - 1; ++j) {
+                    posicionCursor(1,0);
+                    cout << " ";
+                    posicionCursor(-1,0);
+                }
+                // Asteriscos
+                for (int j = 0; j < 2 * i + 1; ++j) {
+                    posicionCursor(1,0);
+                    cout<<simbolo(s);
+                    posicionCursor(-1,0);
+                }
+                for (int l=0; l<=n-1+i; ++l){
+                    posicionCursor(-1,0);
+                }
+
+                posicionCursor(0,1);
+            }
+        }
+        break;
+
+    case 7:
+        {
+            // Parte superior del hexágono
+            for (int i = 0; i < n; ++i) {
+                // Espacios antes de los asteriscos
+                for (int j = 0; j < n - i - 1; ++j) {
+                    posicionCursor(1,0);
+                    cout << " ";
+                    posicionCursor(-1,0);
+                }
+                // Asteriscos
+                for (int j = 0; j < n + 2 * i; ++j) {
+                    posicionCursor(1,0);
+                    cout<<simbolo(s);
+                    posicionCursor(-1,0);
+                }
+                for (int l=0; l<=2*n+i-2; ++l){
+                    posicionCursor(-1,0);
+                }
+
+                posicionCursor(0,1);
+            }
+
+            // Parte central del hexágono
+            for (int i = 0; i < n; ++i) {
+                // Asteriscos
+                for (int j = 0; j < 3 * n - 2; ++j) {
+                    posicionCursor(1,0);
+                    cout<<simbolo(s);
+                    posicionCursor(-1,0);
+                }
+                for (int l=0; l<=3*n-3; ++l){
+                    posicionCursor(-1,0);
+                }
+
+                posicionCursor(0,1);
+            }
+
+            // Parte inferior del hexágono
+            for (int i = n - 1; i >= 0; --i) {
+                // Espacios antes de los asteriscos
+                for (int j = 0; j < n - i - 1; ++j) {
+                    posicionCursor(1,0);
+                    cout << " ";
+                    posicionCursor(-1,0);
+                }
+                // Asteriscos
+                for (int j = 0; j < n + 2 * i; ++j) {
+                    posicionCursor(1,0);
+                    cout<<simbolo(s);
+                    posicionCursor(-1,0);
+                }
+                for (int l=0; l<=2*n+i-2; ++l){
+                    posicionCursor(-1,0);
+                }
+
+                posicionCursor(0,1);
+            }
+        }
         break;
 
     default: cout<<"Ninguna figura seleccionada";
