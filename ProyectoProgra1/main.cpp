@@ -403,10 +403,10 @@ void menu(int X, int Y){
 
     reiniciar:
     system("cls");
-    gotoxy(50,0);cout<<"Menu"<<endl;
-    gotoxy(0,1);cout<<"Esc: Salir - F1:Cuadrado - F2:Triangulo - F3:Linea - F4: Rectangulo - F5: Circulo - F6: Rombo - F7: Hexagono";
-    gotoxy(0,2);cout<<"F8:Cambiar caracter - F9:Borrar pantalla - F10:Cambiar color";
-    gotoxy(0,3);cout<<"F12:Grabar pantalla - Ctrl+A: Abrir desde archivo ";
+    gotoxy(70,0);cout<<"Menu"<<endl;
+    gotoxy(10,1);cout<<"Esc: Salir - F1:Cuadrado - F2:Triangulo - F3:Linea - F4: Rectangulo - F5: Circulo - F6: Rombo - F7: Hexagono";
+    gotoxy(33,2);cout<<"F8:Cambiar caracter - F9:Borrar pantalla - F10:Cambiar color";
+    gotoxy(40,3);cout<<"F12:Grabar pantalla - Ctrl+A: Abrir desde archivo ";
     tecla = _getch();
 
     if (tecla==1){
