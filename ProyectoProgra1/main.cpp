@@ -7,6 +7,8 @@
 #include <windows.h>
 #include <cmath>
 #include <fstream>
+#include <string>
+
 
 using namespace std;
 
@@ -94,7 +96,7 @@ COORD GetConsoleCursorPosition(HANDLE hConsoleOutput) {
     if (GetConsoleScreenBufferInfo(hConsoleOutput, &cbsi)) {
         return cbsi.dwCursorPosition;
     } else {
-        // La función falló. Llama a GetLastError() para obtener más detalles.
+
         COORD invalid = { -1, -1 };
         return invalid;
     }
@@ -507,7 +509,12 @@ char simbolo(int x){
 
 void exportar(){
 
-    ofstream outFile("pantalla.txt");
+    string nombre;
+
+    cout<<"Digite el nombre del archivo ";
+    cin>> nombre;
+    nombre += ".txt";
+    ofstream outFile(nombre);
 
     for (int l = 0; l <= 100; l++) {
         for(int m=1; m<=6;m++){
@@ -524,10 +531,16 @@ void exportar(){
 
 void importar(){
 
-    ifstream inFile("pantalla.txt");
+    string nombre;
+
+    cout<<"Digite el nombre del archivo ";
+    cin>> nombre;
+    nombre += ".txt";
+
+    ifstream inFile(nombre);
 
     if (!inFile) {
-        std::cerr << "Error al abrir el archivo para lectura." << std::endl;
+        cerr << "Error al abrir el archivo para lectura." << endl;
         return ;
     }
 
@@ -536,7 +549,7 @@ void importar(){
         for (int m = 1; m<= 6; m++) {
             inFile >> pantalla[l][m];
             if (inFile.fail()) {
-                std::cerr << "Error al leer el archivo." << std::endl;
+                cerr << "Error al leer el archivo." << std::endl;
                 return ;
             }
         }
